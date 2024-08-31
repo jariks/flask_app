@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='join_game.css') }}">{% endblock %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+<center>
+    <div class="container">
+        <h1>Join a Game</h1>
+
+        <form class="formy" method="post">
+            {{ form.hidden_tag() }}
+            {{ form.invite(class="invt")}}
+            <br>
+            
+            {{ form.submit(class="submit") }}
+        </form>
+    </div>
+</center>
+
+
+{% endblock %}

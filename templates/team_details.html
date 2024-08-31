@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='team_details.css') }}">{% endblock %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    
+
+    
+    
+    <div class="container">
+        <h1>Info</h1>   
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Teams: {{ team.name }}</h2>
+            </div>
+            <div class="col-md-6">
+                {% if team.score is none %}
+                    <h2>Game is still underway</h2>
+                {% else %}
+                    <h2>Score: {{ team.score }}</h2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if game.creator_id == current_user.id %}        
+    <div class="container">
+        <h1>Add/Update score</h1>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+        <div class="row">
+                <div class="col-md-6">
+                    {{ form.result_one(class="btn btn-register btn-block") }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.result_two(class="btn btn-register btn-block") }}
+                </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                
+                {{ form.submit(class="btn btn-custom btn-block") }}
+            </div>
+        </div>
+        </form>
+        <div class="row">
+            <div class="col">
+                <a href="{{url_for('bet.team_results', team_id=team.id)}}" class="btn btn-custom btn-block">Finish game</a>
+            </div>
+        </div>
+    </div> 
+    {% endif %}
+
+
+
+
+    {% if game.creator_id != current_user.id %}        
+    <div class="container">
+        <h1>Add bet</h1>
+
+        
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+        <div class="row">
+                <div class="col-md-6">
+                    {{ form_bets.result_1(class="btn btn-register btn-block") }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_bets.result_2(class="btn btn-register btn-block") }}
+                </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="btn btn-custom btn-block">{{team.default_bet}} Credits</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                
+                {{ form.submit(class="btn btn-custom btn-block") }}
+            </div>
+        </div>
+        </form>
+        
+    </div> 
+    {% endif %}
+            
+    <div class="container mg">
+        <h2>Bets</h2>
+        <div class="game-list">
+            <div class="game-header">
+                <div class="game-name">Player name</div>
+                <div class="game-code">Player bet</div>
+            </div>
+            
+            
+            {% for bet in bets %}
+            <a href="{{ url_for('index') }}" class="game-item">
+                <div class="game-name">{{ bet.username }}</div>
+                <div class="game-code">{{bet.amount}}</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

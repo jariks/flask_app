@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='game_details.css') }}">{% endblock %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flashes">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    
+    
+    
+    <div class="container">
+        <h1>Info</h1>   
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Created by: {{ game.creator.username }}</h2>
+            </div>
+            <div class="col-md-6">
+                <h2>{{ game.name }} ({{ game.game_key }})</h2>
+            </div>
+        </div>
+    </div>
+
+    {% if game.creator_id == current_user.id %}
+        <div class="container">
+            <h1>Configure teams</h1>
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+            <div class="row">
+                    <div class="col-md-6">
+                        {{ form.team_one(class="btn btn-register btn-block") }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.team_two(class="btn btn-register btn-block") }}
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    
+                    {{ form.bet_amount(class="btn btn-register btn-block") }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    
+                    {{ form.submit(class="btn btn-custom btn-block") }}
+                </div>
+            </div>
+            </form>
+            
+        </div> 
+    {% endif %}   
+    <div class="container">
+        <h2>Teams</h2>
+        <div class="game-list">
+            <div class="game-header">
+                <div class="game-name">Team name</div>
+                <div class="game-code">Delete</div>
+            </div>
+            
+            
+            
+            {% for team in teams %}
+            <div class="game-item">
+                <div class="game-name"><a href="{{ url_for('bet.team_details', team_id=team.id) }}" >{{ team.name }}</a></div>
+                <div class="game-name"><a href="{{url_for('bet.delete_team', team_id=team.id, game_key=game_key)}}">Delete</a></div>
+                
+            </div>
+            
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container mg">
+        <h2>Players</h2>
+        <div class="game-list">
+            <div class="game-header">
+                <div class="game-name">Player name</div>
+                <div class="game-code">Delete</div>
+            </div>
+            
+            
+            {% for player in players %}
+            <div class="game-item">
+                <div class="game-name"><a href="{{ url_for('bet.profile', user_id=player.player_id) }}" >{{ player.username }}</a></div>
+                <div class="game-name"><a href="{{url_for('bet.delete_player', player_id=player.player_id, game_key=game_key)}}">Delete</a></div>
+                
+            </div>
+            
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

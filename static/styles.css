@@ -1,0 +1,38 @@
+.google-btn {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 35px;
+    border: none;  /* Remove any default border */
+    cursor: pointer;  /* Change cursor to pointer on hover */
+    transition: transform 0.3s;  /* Smooth transition effect */
+    margin-right: 20px;
+}
+
+.google-btn:hover, .pfp_image:hover {
+    transform: scale(1.1);  /* Slightly enlarge on hover */
+}
+
+.pfp_image {
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 40px;
+    border: none;  /* Remove any default border */
+    cursor: pointer;  /* Change cursor to pointer on hover */
+    transition: transform 0.3s;  /* Smooth transition effect */
+    margin-left: 20px;
+}
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+.flashes li {
+    background-color: #5bd84ba8;
+    color: #000000;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    
+    
+    <h1>{{ user.username }}'s Profile</h1>
+    {% if user.id == current_user.id%}
+        <p>Email: {{ user.email }}</p>
+    {% endif %}
+    
+    
+    <h2>Created Games</h2>
+    <ul>
+        {% for game in created_games %}
+            <li>{{ game.name }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Joined Games</h2>
+    <ul>
+        {% for game in joined_games %}
+            <li>{{ game.name }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Bets</h2>
+    <ul>
+        {% for bet in bets %}
+            <li>Bet on Team {{ bet.team.name }}: {{ bet.amount }} ({{ bet.bet }})</li>
+        {% endfor %}
+    </ul>
+
+   
+
+{% endblock %}

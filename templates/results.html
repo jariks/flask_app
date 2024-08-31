@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='results.css') }}">
+{% endblock%}
+
+{% block title %}results{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
+    
+    <div class="row text-center">
+        <div class="col p-3 ">
+            <div class="p-3 text-white bg-secondary rounded-3 box"><h1>Game results</h1></div>
+        </div>
+    </div>
+    
+    <div class="row text-center">
+        <div class="col p-3">
+
+                <div class="p-3 text-white bg-secondary rounded-3 box"><h2>{{team.name}}</h2> </div>
+            
+        </div>
+        <div class="col p-3">
+                <div class="p-3 text-white bg-secondary rounded-3 box"><h2>{{team.score}}</h2></div>
+        </div>
+    </div>
+    <div class="row text-center ">
+        <div class="col p-3 box">
+            <div class="p-3 text-white bg-secondary rounded-3 box">Player name</div>
+        </div>
+        <div class="col p-3">
+            <div class="p-3 text-white bg-secondary rounded-3 box">Speculation</div>
+        </div>
+        <div class="col p-3">
+            <div class="p-3 text-white bg-secondary rounded-3 box">Original bet</div>
+        </div>
+        <div class="col p-3">
+            <div class="p-3 text-white bg-secondary rounded-3 box">Current total amount</div>
+        </div>
+    </div>
+
+    {% for result in results %}
+    <div class="row text-center ">
+        <div class="col p-3 box">
+            <div class="p-3 text-white bg-secondary rounded-3 box">{{result[1]}}</div>
+        </div>
+        <div class="col p-3">
+            <div class="p-3 text-white bg-secondary rounded-3 box">{{result[2]}}</div>
+        </div>
+        <div class="col p-3">
+            <div class="p-3 text-white bg-secondary rounded-3 box">{{result[3]}}</div>
+        </div>
+        <div class="col p-3">
+            <div class="p-3 text-white bg-secondary rounded-3 box">{{result[4]}}</div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    
+    
+    
+    
+{% endblock %}

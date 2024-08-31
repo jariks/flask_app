@@ -1,0 +1,97 @@
+
+.container {
+    margin-top: 50px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+}
+h1, h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.btn-custom {
+    background-color: #306bb8;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+}
+.btn-custom:hover {
+    background-color: #255a9f;
+    color: white;
+    text-decoration: none;
+}
+.game-list {
+    margin-bottom: 2rem;
+}
+.game-header, .game-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    background-color: #e9ecef;
+}
+.game-header {
+    font-weight: bold;
+    background-color: #306bb8;
+    color: white;
+}
+.game-item {
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+.game-item:hover {
+    background-color: #d1d7dd;
+    text-decoration: none;
+    color: #333;
+}
+.game-name, .game-code {
+    flex: 1;
+}
+
+
+.mg {
+    margin-bottom: 50px;
+}
+
+.btn-register, .form-control {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+    
+    
+    
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+.submit {
+    background-color: #306bb8;
+    color: white;
+    border: none;
+}
+.submit:hover {
+    background-color: #285ca3;
+}
