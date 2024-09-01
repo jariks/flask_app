@@ -1,10 +1,10 @@
-from flask import Flask, render_template, url_for, redirect, session, Blueprint, flash, request
+from flask import Flask, render_template, url_for, redirect, session, Blueprint, flash, request, g
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from models import db, Game, Player, User, Team, Bet
 from forms import CreateGameForm, JoinGameForm, Teams, Results, CreateBets
 import random
 from calc import gather_speculation_data_for_team, determine_winners
-
+from decorators import game_access_required
 # Define the blueprint for the bet module
 bet = Blueprint("bet", __name__, static_folder="static", template_folder="templates")
 
@@ -32,16 +32,18 @@ def profile(user_id):
 
 @bet.route('/game/<int:game_key>', methods=["GET", "POST"])
 @login_required
+@game_access_required
 def game_details(game_key):
     form = Teams()
+    game = g.game  # Access the game object stored by the decorator
 
-    game = Game.query.filter_by(game_key=game_key).first_or_404()
+   
     players = Player.query.filter_by(game_id=game.id).all()
 
     if form.validate_on_submit():
         team_string = f"{form.team_one.data}/{form.team_two.data}"
-        team_defautl_bet = form.bet_amount.data
-        new_team = Team(name=team_string,default_bet=team_defautl_bet, game_id=game.id)
+        team_default_bet = form.bet_amount.data
+        new_team = Team(name=team_string, default_bet=team_default_bet, game_id=game.id)
         db.session.add(new_team)
         db.session.commit()
 
@@ -55,12 +57,9 @@ def game_details(game_key):
                 'username': user.username
             })
 
-    
     teams = Team.query.filter_by(game_id=game.id).all()
 
-    # Render a template with the game details
-    return render_template('game_details.html',form=form, teams=teams, game=game, players=player_details, current_user=current_user, game_key=game_key)
-
+    return render_template('game_details.html', form=form, teams=teams, game=game, players=player_details, current_user=current_user, game_key=game_key)
 @bet.route('/team/<int:team_id>', methods=["GET", "POST"])
 @login_required
 def team_details(team_id):
