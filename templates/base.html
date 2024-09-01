@@ -11,31 +11,62 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('index') }}">Atspėk</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav me-auto">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
-                    
-                    <a class="nav-link" href="{{url_for('bet.dashboard')}}">Dashboard</a>
-                </div>
-                <div class="navbar-nav">
-                    
-                    {% if 'user' in session %}
-                        <a class="btn btn-outline-primary" href="{{ url_for('logout') }}">Sign Out</a>
-                        <a href="{{url_for('bet.profile', user_id = session['user']['id'])}}"><img class="pfp_image" src="{{ url_for('static', filename=session['user']['pfp_image']) }}" alt="Profile Picture"></a>
-                    {% else %}
-                        <a href="{{url_for('login_google')}}"><img class="google-btn" src="{{url_for('static', filename='/images/GoogleButton.png')}}" /></a>
-                        <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Sign In</a>
-                    {% endif %}
+        <nav class="navbar navbar-expand-lg bg-body-tertiary d-none d-lg-flex w-100">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url_for('index') }}">Atspėk</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav me-auto">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+                        <a class="nav-link" href="{{url_for('bet.dashboard')}}">Dashboard</a>
+                    </div>
+                    <div class="navbar-nav align-items-center">
+                        {% if 'user' in session %}
+                            <a class="btn btn-outline-primary me-2" href="{{ url_for('logout') }}">Sign Out</a>
+                            <a href="{{url_for('bet.profile', user_id = session['user']['id'])}}">
+                                <img class="pfp_image" src="{{ url_for('static', filename=session['user']['pfp_image']) }}" alt="Profile Picture">
+                            </a>
+                        {% else %}
+                            <a href="{{url_for('login_google')}}" class="me-2">
+                                <img class="google-btn" src="{{url_for('static', filename='/images/GoogleButton.png')}}" alt="Sign in with Google" />
+                            </a>
+                            <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Sign In</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary d-lg-none w-100">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url_for('index') }}">Atspėk</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav me-auto">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+    
+                        <a class="nav-link" href="{{url_for('bet.dashboard')}}">Dashboard</a>
+                    </div>
+                    <div class="navbar-nav">
+    
+                        {% if 'user' in session %}
+                            <a class="btn btn-outline-primary" href="{{ url_for('logout') }}">Sign Out</a>
+                            <br>
+                            <a class="btn btn-outline-primary" href="{{ url_for('bet.profile', user_id = session['user']['id']) }}">Profile</a>
+                            <a href="{{url_for('bet.profile', user_id = session['user']['id'])}}"><img class="pfp_image" src="{{ url_for('static', filename=session['user']['pfp_image']) }}" alt="Profile Picture"></a>
+                        {% else %}
+                            
+                            <a class="btn btn-outline-primary" href="{{url_for('login_google')}}">Google Login</a>
+                            <br>
+                            <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Sign In</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
 
     <div class="container-fluid">
         {% block content %}
