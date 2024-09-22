@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, EmailField, IntegerField
+from wtforms import StringField, PasswordField, SelectField, SubmitField, EmailField, IntegerField
 from wtforms.validators import InputRequired, Length, ValidationError, NumberRange
 from models import User, Team # Import from models.py
 
@@ -31,6 +31,7 @@ class LoginForm(FlaskForm):
 
 class CreateGameForm(FlaskForm):
     name = StringField(validators=[InputRequired(), Length(min=4, max=30)], render_kw={"placeholder": "Name"})
+    type_of_game = SelectField('Game type',choices=[('Football', 'Football'), ('Basketball', 'Basketball')], validators=[InputRequired()])
     submit = SubmitField("Create")
 
 class JoinGameForm(FlaskForm):
@@ -45,13 +46,13 @@ class Teams(FlaskForm):
     submit = SubmitField("Submit")
 
 class Results(FlaskForm):
-    result_one = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=10)], render_kw={"placeholder": "Result 1"})
-    result_two = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=10)], render_kw={"placeholder": "Result 2"})
+    result_one = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Result 1"})
+    result_two = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Result 2"})
     submit = SubmitField("Submit")
     
 class CreateBets(FlaskForm):
-    result_1 = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=10)], render_kw={"placeholder": "Result 1"})
-    result_2 = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=10)], render_kw={"placeholder": "Result 2"})
+    result_1 = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Result 1"})
+    result_2 = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Result 2"})
     
     
     submit = SubmitField("Submit")

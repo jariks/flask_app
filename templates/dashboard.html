@@ -35,12 +35,14 @@
     <div class="game-list">
         <div class="game-header">
             <div class="game-name">Game name</div>
+            <div class="game-name">Game type</div>
             <div class="game-code">Game code</div>
             <div class="game-code">Delete</div>
         </div>
         {% for game in created_games %}
         <div class="game-item">
             <div class="game-name"><a href="{{ url_for('bet.game_details', game_key=game.game_key) }}" >{{ game.name }}</a></div>
+            <div class="game-code">{{ game.type_of_game }}</div>
             <div class="game-code">{{ game.game_key }}</div>
             <div class="game-code"><a href="{{ url_for('bet.delete_game', game_id=game.id) }}">Delete</a></div>
         </div>
@@ -52,11 +54,13 @@
     <div class="game-list">
         <div class="game-header">
             <div class="game-name">Game name</div>
+            <div class="game-name">Game type</div>
             <div class="game-code">Game code</div>
         </div>
         {% for game in joined_games %}
         <a href="{{ url_for('bet.game_details', game_key=game.game_key) }}" class="game-item">
             <div class="game-name">{{ game.name }}</div>
+            <div class="game-code">{{ game.type_of_game }}</div>
             <div class="game-code">{{ game.game_key }}</div>
         </a>
         {% endfor %}

@@ -17,7 +17,7 @@ def create_test_data():
         db.session.commit()
 
         # Create a game
-        game = Game(name='Test Game', creator_id=user1.id, game_key=12345)
+        game = Game(name='Test Game', creator_id=user1.id, game_key=12345, type_of_game="Football")
         db.session.add(game)
         db.session.commit()
 

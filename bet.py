@@ -52,7 +52,8 @@ def game_details(game_key):
         user = User.query.get(player.user_id)
         if user:
             player_details.append({
-                'player_id': player.id,  
+                'player_id': player.id,
+                'user_id': user.id,  
                 'player': player,
                 'username': user.username
             })
@@ -157,11 +158,9 @@ def create_game():
     else:
         key_of_game = session['game_key']
 
-    if form.validate_on_submit():
-        game_name = form.name.data
-        
+    if form.validate_on_submit():    
         # Create and add the new game to the database
-        new_game = Game(name=game_name, creator_id=current_user.id, game_key=key_of_game)
+        new_game = Game(name=form.name.data, creator_id=current_user.id, game_key=key_of_game, type_of_game=form.type_of_game.data)
         
         db.session.add(new_game)
         db.session.commit()

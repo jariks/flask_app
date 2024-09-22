@@ -5,7 +5,11 @@ from flask_migrate import Migrate
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.sqlite3"
+#Local host: "postgresql://postgres:1234@localhost:5432/master"
+
+#Production: "postgresql://user:vBZETgPrFK60qZLscLn0CMUMR3edaHtd@dpg-cro4kli3esus73buhllg-a.frankfurt-postgres.render.com/master_zh4r"
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://user:vBZETgPrFK60qZLscLn0CMUMR3edaHtd@dpg-cro4kli3esus73buhllg-a.frankfurt-postgres.render.com/master_zh4r"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
@@ -30,6 +34,7 @@ class Game(db.Model):
     name = db.Column(db.String(100), nullable=False)
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     game_key = db.Column(db.Integer, unique=True, nullable=False)
+    type_of_game = db.Column(db.String(100))
 
     teams = db.relationship('Team', backref='game', lazy=True)
     players = db.relationship('Player', backref='game', lazy=True)
