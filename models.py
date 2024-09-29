@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from flask_migrate import Migrate
+import os
 
 
 app = Flask(__name__)
@@ -9,7 +10,8 @@ app = Flask(__name__)
 
 #Production: "postgresql://user:vBZETgPrFK60qZLscLn0CMUMR3edaHtd@dpg-cro4kli3esus73buhllg-a.frankfurt-postgres.render.com/master_zh4r"
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://user:vBZETgPrFK60qZLscLn0CMUMR3edaHtd@dpg-cro4kli3esus73buhllg-a.frankfurt-postgres.render.com/master_zh4r"
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
