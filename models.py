@@ -11,11 +11,12 @@ app = Flask(__name__)
 #Production: "postgresql://user:vBZETgPrFK60qZLscLn0CMUMR3edaHtd@dpg-cro4kli3esus73buhllg-a.frankfurt-postgres.render.com/master_zh4r"
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
