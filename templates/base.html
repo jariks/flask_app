@@ -56,7 +56,7 @@
                             <a class="btn btn-outline-primary" href="{{ url_for('logout') }}">Sign Out</a>
                             <br>
                             <a class="btn btn-outline-primary" href="{{ url_for('bet.profile', user_id = session['user']['id']) }}">Profile</a>
-                            <a href="{{url_for('bet.profile', user_id = session['user']['id'])}}"><img class="pfp_image" src="{{ url_for('static', filename=session['user']['pfp_image']) }}" alt="Profile Picture"></a>
+                            
                         {% else %}
                             
                             <a class="btn btn-outline-primary" href="{{url_for('login_google')}}">Google Login</a>

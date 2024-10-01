@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+{% endblock%}
+
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
@@ -13,33 +17,49 @@
     {% endwith %}
     
     
-    <h1>{{ user.username }}'s Profile</h1>
-    {% if user.id == current_user.id%}
-        <p>Email: {{ user.email }}</p>
-    {% endif %}
-    
-    
-    <h2>Created Games</h2>
-    <ul>
-        {% for game in created_games %}
-            <li>{{ game.name }}</li>
-        {% endfor %}
-    </ul>
-    
-    <h2>Joined Games</h2>
-    <ul>
-        {% for game in joined_games %}
-            <li>{{ game.name }}</li>
-        {% endfor %}
-    </ul>
-    
-    <h2>Bets</h2>
-    <ul>
-        {% for bet in bets %}
-            <li>Bet on Team {{ bet.team.name }}: {{ bet.amount }} ({{ bet.bet }})</li>
-        {% endfor %}
-    </ul>
 
-   
+
+    <div class="container profile-container">
+        <div class="row">
+            <div class="col-12">
+                <div class="box">
+                    <h1>{{ user.username }}'s Profile</h1>
+                </div>
+            </div>
+        </div>
+        
+        {% if user.id == current_user.id %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="box">
+                    <h2>Email</h2>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="box">
+                    <h2>{{ user.email }}</h2>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if created_games %}
+        <div class="game-header">Created Games</div>
+        {% for game in created_games %}
+        <div class="game-item">
+            <p>{{ game.name }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if joined_games %}
+        <div class="game-header">Joined Games</div>
+        {% for game in joined_games %}
+        <div class="game-item">
+            <p>{{ game.name }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
 
 {% endblock %}

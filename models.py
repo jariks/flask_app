@@ -8,8 +8,6 @@ import os
 app = Flask(__name__)
 #Local host: "postgresql://postgres:1234@localhost:5432/master"
 
-#Production: "postgresql://user:vBZETgPrFK60qZLscLn0CMUMR3edaHtd@dpg-cro4kli3esus73buhllg-a.frankfurt-postgres.render.com/master_zh4r"
-
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
