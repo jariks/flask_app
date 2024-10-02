@@ -16,55 +16,40 @@
         {% endif %}
     {% endwith %}
     
-    
-    <div class="row text-center">
-        <div class="col p-3 ">
-            <div class="p-3 text-white bg-secondary rounded-3 box"><h1>Game results</h1></div>
-        </div>
-    </div>
-    
-    <div class="row text-center">
-        <div class="col p-3">
 
-                <div class="p-3 text-white bg-secondary rounded-3 box"><h2>{{team.name}}</h2> </div>
-            
-        </div>
-        <div class="col p-3">
-                <div class="p-3 text-white bg-secondary rounded-3 box"><h2>{{team.score}}</h2></div>
-        </div>
-    </div>
-    <div class="row text-center ">
-        <div class="col p-3 box">
-            <div class="p-3 text-white bg-secondary rounded-3 box">Player name</div>
-        </div>
-        <div class="col p-3">
-            <div class="p-3 text-white bg-secondary rounded-3 box">Speculation</div>
-        </div>
-        <div class="col p-3">
-            <div class="p-3 text-white bg-secondary rounded-3 box">Original bet</div>
-        </div>
-        <div class="col p-3">
-            <div class="p-3 text-white bg-secondary rounded-3 box">Current total amount</div>
-        </div>
-    </div>
-
-    {% for result in results %}
-    <div class="row text-center ">
-        <div class="col p-3 box">
-            <div class="p-3 text-white bg-secondary rounded-3 box">{{result[1]}}</div>
-        </div>
-        <div class="col p-3">
-            <div class="p-3 text-white bg-secondary rounded-3 box">{{result[2]}}</div>
-        </div>
-        <div class="col p-3">
-            <div class="p-3 text-white bg-secondary rounded-3 box">{{result[3]}}</div>
-        </div>
-        <div class="col p-3">
-            <div class="p-3 text-white bg-secondary rounded-3 box">{{result[4]}}</div>
+    <div class="container">
+        <h1>Game Results</h1>
+        
+        <div class="card">
+            <div class="card-header">
+                {{team.name}} : {{team.score}}
+            </div>
+            <div class="card-body p-0">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            
+                            <th>Player name</th>
+                            <th>Speculation</th>
+                            <th>Original bet</th>
+                            <th>Total amount</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% for result in results %}
+                            <td>{{result[1]}}</td>
+                            <td>{{result[2]}}</td>
+                            <td>{{result[3]}}</td>
+                            <td>{{result[4]}}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    {% endfor %}
-    
     
     
     

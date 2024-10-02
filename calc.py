@@ -44,6 +44,7 @@ def gather_speculation_data_for_team(team_id):
 def calculate_distance(actual_score, guessed_score):
     return abs(actual_score[0] - guessed_score[0]) + abs(actual_score[1] - guessed_score[1])
 
+
 def determine_winners(actual_score_str, players_speculations):
     try: 
         actual_score = tuple(map(int, actual_score_str.split('/')))
@@ -90,6 +91,67 @@ def determine_winners(actual_score_str, players_speculations):
         results.append((player_id, player, guessed_score_str, bet, net_gain_or_loss))
     
     return results
+
+
+def determine_winners_basketball(actual_score_str, players_speculations):
+    try: 
+        actual_score = tuple(map(int, actual_score_str.split('/')))
+    except:
+        flash("No score added")
+        return []
+
+    total_bet = sum([d['bet_amount'] for d in players_speculations])
+    
+    min_distance = float('inf')
+    winners = []
+    
+    for d in players_speculations:
+        player_id = d["player_id"]
+        player = d['username']
+        guessed_score_str = d["guessed_score"]
+        bet = d["bet_amount"]
+
+        distance = (actual_score[0]-actual_score[1])
+        
+        if distance < min_distance:
+            min_distance = distance
+            winners = [(player_id, player, bet)]
+        elif distance == min_distance:
+            winners.append((player_id, player, bet))
+            
+    if not winners:
+        return [(d["player_id"], d['username'], d["guessed_score"], d["bet_amount"], -d["bet_amount"]) for d in players_speculations]
+    
+    prize_per_winner = total_bet / len(winners)
+    
+    results = []
+    for d in players_speculations:
+        player_id = d["player_id"]
+        player = d['username']
+        guessed_score_str = d["guessed_score"]
+        bet = d["bet_amount"]
+
+        if player_id in [winner[0] for winner in winners]:
+            net_gain_or_loss = prize_per_winner - bet  # Winner gets prize share minus their bet
+        else:
+            net_gain_or_loss = -bet  # Loser loses their bet
+        results.append((player_id, player, guessed_score_str, bet, net_gain_or_loss))
+    
+    return results
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Test function
 def test_determine_winners():

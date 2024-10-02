@@ -1,0 +1,41 @@
+
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 100px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.card {
+    margin-bottom: 20px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.card-header {
+    background-color: #306bb8;
+    color: white;
+    font-weight: bold;
+}
+.table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+.table th {
+    background-color: #e9ecef;
+    border: none;
+}
+.table td {
+    background-color: #ffffff;
+    border: none;
+}
+.table tr {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
