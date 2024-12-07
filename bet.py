@@ -3,7 +3,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from models import db, Game, Player, User, Team, Bet
 from forms import CreateGameForm, JoinGameForm, Teams, Results, CreateBets
 import random
-from calc import gather_speculation_data_for_team, determine_winners
+from calc import gather_speculation_data_for_team, determine_winners_football, determine_winners_basketball
 from decorators import game_access_required
 # Define the blueprint for the bet module
 bet = Blueprint("bet", __name__, static_folder="static", template_folder="templates")
@@ -67,9 +67,8 @@ def team_details(team_id):
     team = Team.query.get_or_404(team_id)
 
     if team.status == False:
-
         form = Results()
-        form_bets = CreateBets()
+        form_bets = CreateBets(game_type=team.game.type_of_game)
         game = team.game
         current_bets = Bet.query.filter_by(team_id=team.id).all()
         
@@ -82,45 +81,58 @@ def team_details(team_id):
                     'bet': bet.bet,
                     'username': user.username
                 })
+        
         current_player = Player.query.filter_by(user_id=current_user.id, game_id=game.id).first()
-        if form_bets.validate_on_submit():
-            # Check if a bet has already been placed for this user and team
-            existing_bet = Bet.query.filter_by(team_id=team.id, player_id=current_player.id).first()
-            if existing_bet:
-                flash("You have already placed a bet for this team.", "warning")
-            else:
-                results = f"{form_bets.result_1.data}/{form_bets.result_2.data}"
-                bet = Bet(
-                        amount=team.default_bet,
-                        bet=results,
-                        team_id=team.id,
-                        player_id=current_player.id,
+        
+        if request.method == 'POST':
+            if form_bets.validate_on_submit():
+                print("Form validated successfully")  # Debug print
+                existing_bet = Bet.query.filter_by(team_id=team.id, player_id=current_player.id).first()
+                if existing_bet:
+                    flash("You have already placed a bet for this team.", "warning")
+                else:
+                    try:
+                        if game.type_of_game == "Football":
+                            results = f"{form_bets.result_1.data}/{form_bets.result_2.data}"
+                        else:  # game.type_of_game == "Basketball":
+                            results = f"{form_bets.result_3.data}"
                         
+                        bet = Bet(
+                            amount=team.default_bet,
+                            bet=results,
+                            team_id=team.id,
+                            player_id=current_player.id,
                         )
-                
-                db.session.add(bet)
-                db.session.commit()
-                flash("You have successfully placed a bet", "success")
+                        
+                        db.session.add(bet)
+                        db.session.commit()
+                        flash("You have successfully placed a bet", "success")
+                        return redirect(url_for('bet.team_details', team_id=team_id))
+                    except Exception as e:
+                        db.session.rollback()
+                        flash(f"Error placing bet: {str(e)}", "danger")
+                        print(f"Error: {str(e)}")  # Debug print
+            else:
+                print("Form validation failed")  # Debug print
+                print(form_bets.errors)  # Print form errors
 
         if form.validate_on_submit():
-           
             results = f"{form.result_one.data}/{form.result_two.data}"
             team.score = results
-
             db.session.commit()
-            if team.score == results:  # Confirm the update was successful
+            if team.score == results:
                 flash("You have successfully updated the results", "success")
             else:
                 flash("Failed to update results", "danger")
 
         return render_template("team_details.html",
-                                form=form,
-                                form_bets=form_bets,
-                                game=game,
-                                team=team,
-                                current_user=current_user,
-                                bets=bets
-                                )
+                               form=form,
+                               form_bets=form_bets,
+                               game=game,
+                               team=team,
+                               current_user=current_user,
+                               bets=bets
+                               )
     else:
         return redirect(url_for("bet.team_results", team_id=team.id))
 
@@ -128,14 +140,17 @@ def team_details(team_id):
 @login_required
 def team_results(team_id):
     team = Team.query.filter_by(id=team_id).first()
+    game = team.game
     bet = Bet.query.filter_by(team_id=team_id).all()
     if team.score:
         if bet:
-            
             team.status = True
             db.session.commit()
             players_speculations = gather_speculation_data_for_team(team_id)
-            results = determine_winners(team.score, players_speculations)
+            if game.type_of_game == "Football":
+                results = determine_winners_football(team.score, players_speculations)
+            else:
+                results = determine_winners_basketball(team.score, players_speculations)
             return render_template("results.html", results=results, team=team)
         else:
             flash("No bets on team")

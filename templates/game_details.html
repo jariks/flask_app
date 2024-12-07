@@ -67,7 +67,7 @@
             <div class="game-item">
                 <div class="game-name"><a href="{{ url_for('bet.team_details', team_id=team.id) }}" >{{ team.name }}</a></div>
                 {% if current_user.id == game.creator_id %}
-                    <div class="game-name"><a href="{{url_for('bet.delete_team', team_id=team.id, game_key=game_key)}}">Delete</a></div>
+                    <div class="game-name"><a class="delete" href="{{url_for('bet.delete_team', team_id=team.id, game_key=game_key)}}">Delete</a></div>
                 {% else %}
                     <div class="game-name"></div>
                 {% endif %}
@@ -91,7 +91,7 @@
             <div class="game-item">
                 <div class="game-name"><a href="{{ url_for('bet.profile', user_id=player.user_id) }}" >{{ player.username }}</a></div>
                 {% if current_user.id == game.creator_id %}
-                    <div class="game-name"><a href="{{url_for('bet.delete_player', player_id=player.player_id, game_key=game_key)}}">Remove</a></div>
+                    <div class="game-name"><a class="delete" href="{{url_for('bet.delete_player', player_id=player.player_id, game_key=game_key)}}">Remove</a></div>
                 {% else %}
                     <div class="game-name"></div>
                 {% endif %}

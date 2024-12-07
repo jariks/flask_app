@@ -1,8 +1,8 @@
 from flask import Flask, render_template, flash
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SelectField, SubmitField, EmailField, IntegerField
-from wtforms.validators import InputRequired, Length, ValidationError, NumberRange
+from wtforms import StringField, PasswordField, SelectField, SubmitField, EmailField, IntegerField, FormField
+from wtforms.validators import InputRequired, Length, ValidationError, NumberRange, Optional
 from models import User, Team # Import from models.py
 
 
@@ -51,9 +51,18 @@ class Results(FlaskForm):
     submit = SubmitField("Submit")
     
 class CreateBets(FlaskForm):
-    result_1 = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Result 1"})
-    result_2 = IntegerField(validators=[InputRequired(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Result 2"})
-    
-    
+    result_1 = IntegerField('Result 1', validators=[Optional(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Result 1"})
+    result_2 = IntegerField('Result 2', validators=[Optional(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Result 2"})
+    result_3 = IntegerField('Distance', validators=[Optional(), NumberRange(min=0, max=999)], render_kw={"placeholder": "Distance"})
     submit = SubmitField("Submit")
-    
+
+    def __init__(self, *args, game_type=None, **kwargs):
+        super(CreateBets, self).__init__(*args, **kwargs)
+        if game_type == "Football":
+            self.result_1.validators = [InputRequired(), NumberRange(min=0, max=999)]
+            self.result_2.validators = [InputRequired(), NumberRange(min=0, max=999)]
+            del self.result_3
+        elif game_type == "Basketball":
+            self.result_3.validators = [InputRequired(), NumberRange(min=0, max=999)]
+            del self.result_1
+            del self.result_2

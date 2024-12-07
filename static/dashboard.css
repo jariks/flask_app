@@ -36,9 +36,6 @@
     margin-bottom: 15px;
 }
 
-
-
-
 .container {
     margin-top: 50px;
     background-color: white;
@@ -46,7 +43,11 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 800px;
+    overflow: auto;
 }
+
+
+
 h1, h2 {
     text-align: center;
     margin-bottom: 1.5rem;
@@ -102,4 +103,8 @@ h1, h2 {
 
 .mg {
     margin-bottom: 50px;
+}
+
+.overflow {
+    min-width: 550px;
 }

@@ -45,7 +45,7 @@ def calculate_distance(actual_score, guessed_score):
     return abs(actual_score[0] - guessed_score[0]) + abs(actual_score[1] - guessed_score[1])
 
 
-def determine_winners(actual_score_str, players_speculations):
+def determine_winners_football(actual_score_str, players_speculations):
     try: 
         actual_score = tuple(map(int, actual_score_str.split('/')))
     except:
@@ -111,7 +111,7 @@ def determine_winners_basketball(actual_score_str, players_speculations):
         guessed_score_str = d["guessed_score"]
         bet = d["bet_amount"]
 
-        distance = (actual_score[0]-actual_score[1])
+        distance = abs((actual_score[0]-actual_score[1])-int(guessed_score_str))
         
         if distance < min_distance:
             min_distance = distance
@@ -162,7 +162,21 @@ def test_determine_winners():
         {"player_id": 3, "username": "Charlie", "guessed_score": "3/0", "bet_amount": 15},
     ]
 
-    results = determine_winners(actual_score, players_speculations)
+    results = determine_winners_football(actual_score, players_speculations)
+    
+    print("Test Results:")
+    for result in results:
+        print(f"Player ID: {result[0]}, Name: {result[1]}, Guess: {result[2]}, Bet: {result[3]}, Net Gain/Loss: {result[4]}")
+
+def test_determine_winners_basketball():
+    actual_score = "20/10"
+    players_speculations = [
+        {"player_id": 1, "username": "Alice", "guessed_score": "+7", "bet_amount": 15},
+        {"player_id": 2, "username": "Bob", "guessed_score": "-7", "bet_amount": 15},
+        {"player_id": 3, "username": "Charlie", "guessed_score": "+20", "bet_amount": 15},
+    ]
+
+    results = determine_winners_basketball(actual_score, players_speculations)
     
     print("Test Results:")
     for result in results:
@@ -170,4 +184,4 @@ def test_determine_winners():
 
 # Run the test
 if __name__ == "__main__":
-    test_determine_winners()
+    test_determine_winners_basketball()

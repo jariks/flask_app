@@ -18,7 +18,6 @@
     
 
     <div class="container">
-        <h1>Game Results</h1>
         
         <div class="card">
             <div class="card-header">
@@ -36,16 +35,18 @@
                             
                         </tr>
                     </thead>
+                    {% for result in results %}
                     <tbody>
                         <tr>
-                            {% for result in results %}
+                            
                             <td>{{result[1]}}</td>
                             <td>{{result[2]}}</td>
                             <td>{{result[3]}}</td>
                             <td>{{result[4]}}</td>
-                            {% endfor %}
+                            
                         </tr>
                     </tbody>
+                    {% endfor %}
                 </table>
             </div>
         </div>

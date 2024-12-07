@@ -64,36 +64,40 @@
 
 
 
-    {% if game.creator_id != current_user.id %}        
+    {% if game.creator_id != current_user.id %}
     <div class="container">
         <h1>Add bet</h1>
-
-        
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
-        <div class="row">
-                <div class="col-md-6">
-                    {{ form_bets.result_1(class="btn btn-register btn-block") }}
+        <form action="{{ url_for('bet.team_details', team_id=team.id) }}" method="post">
+            {{ form_bets.hidden_tag() }}
+            {% if game.type_of_game == "Football" %}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_bets.result_1(class="btn btn-register btn-block") }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_bets.result_2(class="btn btn-register btn-block") }}
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    {{ form_bets.result_2(class="btn btn-register btn-block") }}
+            {% elif game.type_of_game == "Basketball" %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ form_bets.result_3(class="btn btn-register btn-block") }}
+                    </div>
                 </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="btn btn-custom btn-block">{{team.default_bet}} Credits</div>
+            {% endif %}
+            <div class="row">
+                <div class="col">
+                    <div class="btn btn-custom btn-block">{{team.default_bet}} Credits</div>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                
-                {{ form.submit(class="btn btn-custom btn-block") }}
+            <div class="row">
+                <div class="col">
+                    {{ form_bets.submit(class="btn btn-custom btn-block") }}
+                </div>
             </div>
-        </div>
         </form>
-        
-    </div> 
-    {% endif %}
+    </div>
+{% endif %}
             
     <div class="container mg">
         <h2>Bets</h2>

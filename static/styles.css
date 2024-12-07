@@ -1,3 +1,6 @@
+.html {
+    font-size: 16px;
+}
 .google-btn {
     display: block;
     margin-top: auto;
@@ -37,3 +40,11 @@
     margin-top: 0.2rem;
     border-radius: 4px;
 }
+
+.delete {
+    color: #eb4034;
+}
+.delete:hover {
+    color: #eb4034;
+}
+

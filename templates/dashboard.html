@@ -30,9 +30,9 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container ">
     <h2>Created Games</h2>
-    <div class="game-list">
+    <div class="game-list overflow">
         <div class="game-header">
             <div class="game-name">Game name</div>
             <div class="game-name">Game type</div>
@@ -44,14 +44,14 @@
             <div class="game-name"><a href="{{ url_for('bet.game_details', game_key=game.game_key) }}" >{{ game.name }}</a></div>
             <div class="game-code">{{ game.type_of_game }}</div>
             <div class="game-code">{{ game.game_key }}</div>
-            <div class="game-code"><a href="{{ url_for('bet.delete_game', game_id=game.id) }}">Delete</a></div>
+            <div class="game-code"><a class="delete" href="{{ url_for('bet.delete_game', game_id=game.id) }}">Delete</a></div>
         </div>
         {% endfor %}
     </div>
 </div>
 <div class="container mg">
     <h2>Joined Games</h2>
-    <div class="game-list">
+    <div class="game-list overflow">
         <div class="game-header">
             <div class="game-name">Game name</div>
             <div class="game-name">Game type</div>

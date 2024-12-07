@@ -8,15 +8,19 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     margin-top: 100px;
+    overflow: auto;
+    
 }
 h1 {
     text-align: center;
     margin-bottom: 20px;
 }
 .card {
+    min-width: 500px;
     margin-bottom: 20px;
     border: none;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    
 }
 .card-header {
     background-color: #306bb8;
@@ -39,3 +43,4 @@ h1 {
 .table tr {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
